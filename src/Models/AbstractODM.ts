@@ -1,4 +1,5 @@
-import { Model, models, Schema, model } from 'mongoose';
+import { Model, models, Schema, model, isValidObjectId } from 'mongoose';
+import CatchError from '../utils/CatchError';
 
 abstract class AbstractODM<T> {
   protected model: Model<T>;
@@ -15,11 +16,12 @@ abstract class AbstractODM<T> {
     return this.model.create({ ...obj });
   }
 
-  public async get(): Promise<T[]> {
+  public async getAll(): Promise<T[]> {
     return this.model.find();
   }
 
   public async find(id: string): Promise<T | null> {
+    if (!isValidObjectId(id)) throw new CatchError('Invalid mongo id', 422);
     return this.model.findOne({ _id: id });
   }
 }
