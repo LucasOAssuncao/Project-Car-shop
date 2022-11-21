@@ -36,4 +36,14 @@ export default class CarService {
     }
     return new Car(car);
   }
+
+  public async update(id: string, data: Partial<ICar>) {
+    const car = await this.model.find(id);
+    if (!car) throw new CatchError('Car not found', 404);
+
+    const updated = await this.model.update(id, data);
+    if (updated) {
+      return new Car(updated);
+    }
+  }
 }

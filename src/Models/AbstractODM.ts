@@ -24,6 +24,12 @@ abstract class AbstractODM<T> {
     if (!isValidObjectId(id)) throw new CatchError('Invalid mongo id', 422);
     return this.model.findOne({ _id: id });
   }
+
+  public async update(id: string, obj: Partial<T>): Promise<T | null> {
+    if (!isValidObjectId(id)) throw new CatchError('Invalid mongo id', 422);
+
+    return this.model.findByIdAndUpdate(id, obj, { new: true });
+  }
 }
 
 export default AbstractODM;

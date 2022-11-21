@@ -36,4 +36,18 @@ export default class CarController {
       }
     }
   }
+
+  async update(): Promise<Response | undefined> {
+    try {
+      const { id } = this.req.params;
+      const updated = await this.service.update(id, this.req.body);
+      if (updated) {
+        return this.res.status(200).json(updated);
+      }
+    } catch (error) {
+      if (error instanceof CatchError) {
+        return this.res.status(error.status).json({ message: error.message });
+      }
+    }
+  }
 }
