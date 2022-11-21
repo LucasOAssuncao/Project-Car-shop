@@ -4,7 +4,6 @@ import {
   model,
   models,
 } from 'mongoose';
-
 import ICar from '../Interfaces/ICar';
 import AbstractODM from './AbstractODM';
 
